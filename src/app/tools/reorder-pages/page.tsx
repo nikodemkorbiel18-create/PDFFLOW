@@ -30,7 +30,7 @@ const features = [
   },
   {
     icon: Shield,
-    title: "100% Private",
+    title: "Private by Design",
     description: "All processing happens in your browser. Files never leave your device.",
   },
   {

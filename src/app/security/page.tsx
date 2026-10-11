@@ -7,7 +7,6 @@ import {
   Eye,
   Server,
   FileCheck,
-  CheckCircle,
   Globe,
   HardDrive,
   ShieldCheck,
@@ -19,7 +18,7 @@ const securityFeatures = [
   {
     icon: Laptop,
     title: "100% Client-Side Processing",
-    description: "Your files are processed entirely in your browser using WebAssembly and JavaScript. No data ever touches our servers.",
+    description: "Your files are processed entirely in your browser using WebAssembly and JavaScript. Your files never touch our servers.",
   },
   {
     icon: HardDrive,
@@ -39,7 +38,7 @@ const securityFeatures = [
   {
     icon: Globe,
     title: "HTTPS Everywhere",
-    description: "All connections are encrypted with TLS 1.3. Your browsing is secure from end to end.",
+    description: "The site is served only over HTTPS, so your connection to PDFflow is encrypted.",
   },
   {
     icon: Server,
@@ -50,23 +49,23 @@ const securityFeatures = [
 
 const complianceItems = [
   {
-    title: "GDPR Friendly",
-    description: "Privacy by design - files never leave your device",
+    title: "Privacy by Design",
+    description: "PDF files are processed on your device, not uploaded",
     icon: ShieldCheck,
   },
   {
-    title: "CCPA Friendly",
-    description: "No personal data collection from document contents",
+    title: "No Document Collection",
+    description: "We don't collect the contents of your documents",
     icon: ShieldCheck,
   },
   {
-    title: "100% Local",
-    description: "All processing happens in your browser",
+    title: "In-browser Processing",
+    description: "PDF processing happens in your browser",
     icon: FileCheck,
   },
   {
-    title: "Zero Storage",
-    description: "We never store or access your documents",
+    title: "No File Storage",
+    description: "We don't store your documents on our servers",
     icon: FileCheck,
   },
 ];
@@ -82,15 +81,15 @@ const faqs = [
   },
   {
     question: "What happens to my files after processing?",
-    answer: "Nothing - they remain on your device. When you close the browser tab, any temporary data is cleared. We recommend saving your processed files to your preferred location.",
+    answer: "Nothing — they stay on your device. Processed files live in browser memory until you download them or close the tab. PDFflow keeps a short list of recently processed file names in your browser so you can find them again; you can clear it from your dashboard.",
   },
   {
     question: "Is PDFflow safe for confidential documents?",
-    answer: "Yes. Our client-side architecture makes PDFflow ideal for sensitive documents like legal contracts, medical records, and financial statements.",
+    answer: "Because files are processed in your browser and not uploaded, PDFflow avoids the main risk of online PDF tools. That said, you are responsible for deciding whether it meets your own legal or compliance requirements (for example HIPAA) before using it with regulated data.",
   },
   {
     question: "Do you use third-party services that might access my files?",
-    answer: "No. We don't use any third-party services for file processing. Analytics are limited to anonymous usage patterns and never include document contents.",
+    answer: "No third-party service processes your files. We use Vercel (hosting and anonymous page analytics), Supabase (accounts) and Stripe (payments); none of them receive your documents.",
   },
 ];
 
@@ -116,7 +115,7 @@ export default function SecurityPage() {
             </span>
           </h1>
           <p className="text-xl text-white/60 max-w-2xl mx-auto mb-10">
-            PDFflow processes everything locally in your browser. No uploads, no servers, no risk.
+            PDFflow processes everything locally in your browser. No uploads, no file storage.
             Your sensitive documents stay exactly where they should — with you.
           </p>
           <div className="flex items-center justify-center gap-4">
@@ -216,10 +215,10 @@ export default function SecurityPage() {
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-              Compliance & certifications
+              Our privacy principles
             </h2>
             <p className="text-white/60 max-w-2xl mx-auto">
-              Meeting the highest standards for data protection and security
+              How PDFflow handles your documents. PDFflow does not currently hold formal security certifications.
             </p>
           </div>
 
@@ -236,56 +235,6 @@ export default function SecurityPage() {
                 <p className="text-white/40 text-sm">{item.description}</p>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Comparison */}
-      <section className="py-20 border-t border-white/5">
-        <div className="max-w-4xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-              PDFflow vs traditional PDF tools
-            </h2>
-          </div>
-
-          <div className="overflow-hidden rounded-2xl border border-white/[0.06]">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b border-white/[0.06]">
-                  <th className="text-left p-4 text-white/60 font-medium">Feature</th>
-                  <th className="p-4 text-emerald-400 font-semibold">PDFflow</th>
-                  <th className="p-4 text-white/40 font-medium">Others</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-white/[0.06]">
-                <tr className="bg-white/[0.01]">
-                  <td className="p-4 text-white/80">Files uploaded to servers</td>
-                  <td className="p-4 text-center"><span className="text-emerald-400 font-semibold">Never</span></td>
-                  <td className="p-4 text-center"><span className="text-red-400">Always</span></td>
-                </tr>
-                <tr>
-                  <td className="p-4 text-white/80">Data collection</td>
-                  <td className="p-4 text-center"><span className="text-emerald-400 font-semibold">None</span></td>
-                  <td className="p-4 text-center"><span className="text-red-400">Extensive</span></td>
-                </tr>
-                <tr className="bg-white/[0.01]">
-                  <td className="p-4 text-white/80">Works offline</td>
-                  <td className="p-4 text-center"><CheckCircle className="w-5 h-5 text-emerald-400 mx-auto" /></td>
-                  <td className="p-4 text-center"><span className="text-red-400">✕</span></td>
-                </tr>
-                <tr>
-                  <td className="p-4 text-white/80">Third-party access risk</td>
-                  <td className="p-4 text-center"><span className="text-emerald-400 font-semibold">Zero</span></td>
-                  <td className="p-4 text-center"><span className="text-red-400">High</span></td>
-                </tr>
-                <tr className="bg-white/[0.01]">
-                  <td className="p-4 text-white/80">GDPR compliant by design</td>
-                  <td className="p-4 text-center"><CheckCircle className="w-5 h-5 text-emerald-400 mx-auto" /></td>
-                  <td className="p-4 text-center"><span className="text-yellow-400">Varies</span></td>
-                </tr>
-              </tbody>
-            </table>
           </div>
         </div>
       </section>
@@ -321,7 +270,7 @@ export default function SecurityPage() {
               Ready to process PDFs securely?
             </h2>
             <p className="text-white/60 mb-8 max-w-xl mx-auto">
-              Join thousands of users who trust PDFflow with their sensitive documents.
+              Process your PDFs without uploading them anywhere.
             </p>
             <Link
               href="/merge"

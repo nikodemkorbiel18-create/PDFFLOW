@@ -121,6 +121,26 @@ export default function SettingsPage() {
     }
   };
 
+  const [isOpeningBilling, setIsOpeningBilling] = useState(false);
+
+  const handleManageBilling = async () => {
+    setIsOpeningBilling(true);
+    try {
+      const response = await fetch("/api/stripe/portal", { method: "POST" });
+      const data = await response.json();
+      if (!response.ok || !data.url) {
+        throw new Error(data.error || "Could not open billing");
+      }
+      window.location.href = data.url;
+    } catch {
+      setMessage({
+        type: "error",
+        text: "Couldn't open billing. Email hello@pdfflow.space and we'll help you manage or cancel your plan.",
+      });
+      setIsOpeningBilling(false);
+    }
+  };
+
   const handleDeleteAccount = async () => {
     if (!confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
       return;
@@ -305,10 +325,26 @@ export default function SettingsPage() {
                         <div>
                           <p className="font-semibold capitalize">{subscription?.plan || "Free"} Plan</p>
                           <p className="text-sm text-[var(--muted-foreground)]">
-                            {isPro ? "Unlimited access to all features" : "2 files per day, 10MB max"}
+                            {isPro ? "Unlimited access to all tools, 100MB files" : "30 free tools, 4 free premium uses, 10MB max"}
                           </p>
+                          {isPro && subscription?.current_period_end && (
+                            <p className="text-xs text-[var(--muted-foreground)] mt-1">
+                              {subscription.status === "past_due"
+                                ? "Payment failed — update your card to keep Pro"
+                                : `Renews or ends on ${new Date(subscription.current_period_end).toLocaleDateString()}`}
+                            </p>
+                          )}
                         </div>
                       </div>
+                      {isPro && subscription?.current_period_end && (
+                        <button
+                          onClick={handleManageBilling}
+                          disabled={isOpeningBilling}
+                          className="px-4 py-2 rounded-full border border-[var(--border)] text-sm font-medium hover:bg-[var(--card)] transition-all disabled:opacity-60"
+                        >
+                          {isOpeningBilling ? "Opening…" : "Manage billing"}
+                        </button>
+                      )}
                       {!isPro && (
                         <Link
                           href="/pricing"

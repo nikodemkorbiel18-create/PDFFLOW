@@ -15,7 +15,7 @@ const values = [
   {
     icon: Shield,
     title: "Privacy First",
-    description: "Your data is yours. We built PDFflow so your files never leave your device. No exceptions.",
+    description: "Your data is yours. We built PDFflow so your PDFs are processed on your device, not uploaded.",
   },
   {
     icon: Zap,
@@ -30,37 +30,37 @@ const values = [
   {
     icon: Globe,
     title: "Accessible to All",
-    description: "Great tools shouldn&apos;t require expensive subscriptions. Core features are free, forever.",
+    description: "Great tools shouldn&apos;t require expensive subscriptions. 30 core tools are free to use.",
   },
 ];
 
 const stats = [
-  { value: "20+", label: "PDF Tools" },
-  { value: "100%", label: "Local Processing" },
-  { value: "0", label: "Files Uploaded" },
-  { value: "Free", label: "Core Features" },
+  { value: "100", label: "PDF Tools" },
+  { value: "30", label: "Free Tools" },
+  { value: "In-browser", label: "PDF Processing" },
+  { value: "0", label: "Files Stored" },
 ];
 
 const milestones = [
   {
-    year: "2024",
+    year: "Jan 2026",
     title: "PDFflow Launches",
     description: "Started with a simple mission: make PDF tools that respect privacy.",
   },
   {
-    year: "2024",
-    title: "Core Tools Complete",
-    description: "Launched merge, split, compress, and convert functionality.",
+    year: "Jan 2026",
+    title: "100 Tools",
+    description: "Grew from merge, split and compress to 100 tools across organizing, converting and editing.",
   },
   {
-    year: "2025",
+    year: "Jan 2026",
     title: "Pro Launch",
     description: "Introduced Pro plans with advanced features for power users.",
   },
   {
-    year: "2025",
-    title: "Enterprise Ready",
-    description: "Launched team features and enterprise security compliance.",
+    year: "Oct 2026",
+    title: "Annual Plan",
+    description: "Added a $39.99/year Pro plan and self-serve billing management.",
   },
 ];
 
@@ -101,7 +101,7 @@ export default function AboutPage() {
                 Our Mission
               </h2>
               <p className="text-lg text-white/60 mb-6">
-                Every day, millions of people upload confidential documents to online PDF tools.
+                Every day, people upload confidential documents to online PDF tools.
                 Bank statements, contracts, medical records — all sent to servers they don&apos;t control.
               </p>
               <p className="text-lg text-white/60 mb-6">
@@ -196,7 +196,7 @@ export default function AboutPage() {
               Built by a small team
             </h2>
             <p className="text-white/60 max-w-2xl mx-auto">
-              We&apos;re a lean team obsessed with building the best PDF tools on the planet.
+              We&apos;re a small, independent team focused on fast, private PDF tools.
               No bloated organization, no bureaucracy — just shipping great software.
             </p>
           </div>
@@ -208,7 +208,7 @@ export default function AboutPage() {
               </div>
               <h3 className="text-xl font-semibold text-white mb-2">Small but Mighty</h3>
               <p className="text-white/50 mb-6">
-                We&apos;re a focused team dedicated to building the best privacy-first PDF tools.
+                Questions, ideas or feedback? We read every message.
               </p>
               <Link
                 href="/contact"

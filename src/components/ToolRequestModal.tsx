@@ -20,18 +20,22 @@ export function ToolRequestModal({ isOpen, onClose }: ToolRequestModalProps) {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Store in localStorage for now (could be sent to an API)
-    const requests = JSON.parse(localStorage.getItem("toolRequests") || "[]");
-    requests.push({
-      toolName,
-      description,
-      email,
-      timestamp: new Date().toISOString(),
-    });
-    localStorage.setItem("toolRequests", JSON.stringify(requests));
-
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 800));
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          subject: `Tool request: ${toolName}`,
+          message: description || toolName,
+        }),
+      });
+      if (!response.ok) throw new Error();
+    } catch {
+      setIsSubmitting(false);
+      alert("We couldn't send your request. Please email hello@pdfflow.space instead.");
+      return;
+    }
 
     setIsSubmitting(false);
     setIsSubmitted(true);

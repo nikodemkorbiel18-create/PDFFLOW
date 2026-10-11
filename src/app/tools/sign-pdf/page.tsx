@@ -57,7 +57,7 @@ const faqs = [
   },
   {
     question: "Will my signature be saved?",
-    answer: "Your signature is only stored in your browser's local storage for convenience. It never leaves your device unless you choose to use it on a document.",
+    answer: "Saved signatures are kept in your browser's local storage. If you're a Pro user, saved signature templates also sync to your account so you can use them on your other devices. The PDFs you sign are not uploaded.",
   },
   {
     question: "Can I also add dates and text?",

@@ -1,11 +1,23 @@
 import { createClient } from "@/lib/supabase/server";
 import { NextResponse } from "next/server";
 
+// Returns a path that is safe to append to our own origin after login.
+// `next` comes from the URL, so anyone can craft it (e.g. "@evil.com" or
+// "//evil.com") to bounce a freshly signed-in user off-site.
+function getSafeRedirectPath(next: string | null): string {
+  // Must be a single-slash relative path: rejects "@evil.com", "//evil.com",
+  // "/\evil.com" (browsers treat "\" as "/") and anything with control chars.
+  if (!next || !next.startsWith("/") || next.startsWith("//") || /[\\\x00-\x1f]/.test(next)) {
+    return "/";
+  }
+  return next;
+}
+
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url);
   const code = searchParams.get("code");
   const error_description = searchParams.get("error_description");
-  const next = searchParams.get("next") ?? "/";
+  const next = getSafeRedirectPath(searchParams.get("next"));
 
   // Handle OAuth errors from provider
   if (error_description) {

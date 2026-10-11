@@ -40,15 +40,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/extract-images",
   ];
 
-  // Comparison pages
-  const comparePages = [
-    "/compare/ilovepdf",
-    "/compare/smallpdf",
-    "/compare/adobe-acrobat",
-    "/compare/pdf24",
-  ];
-
-  const allPages = [...staticPages, ...toolPages, ...comparePages];
+  const allPages = [...staticPages, ...toolPages];
 
   return allPages.map((route) => ({
     url: `${baseUrl}${route}`,

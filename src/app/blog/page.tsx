@@ -240,49 +240,6 @@ export default function BlogPage() {
         </div>
       </section>
 
-      {/* Newsletter CTA */}
-      <section className="py-16 border-t border-[#1e293b]">
-        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-2xl font-bold text-white mb-3">Get PDF tips in your inbox</h2>
-            <p className="text-[#94a3b8] mb-6">
-              Subscribe to our newsletter for the latest guides, tips, and product updates.
-            </p>
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                const form = e.target as HTMLFormElement;
-                const emailInput = form.querySelector('input[type="email"]') as HTMLInputElement;
-                if (emailInput.value) {
-                  const subscribers = JSON.parse(localStorage.getItem("emailSubscribers") || "[]");
-                  subscribers.push({ email: emailInput.value, timestamp: new Date().toISOString() });
-                  localStorage.setItem("emailSubscribers", JSON.stringify(subscribers));
-                  emailInput.value = "";
-                  alert("Thanks for subscribing!");
-                }
-              }}
-              className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
-            >
-              <input
-                type="email"
-                placeholder="Enter your email"
-                required
-                className="flex-1 px-4 py-3 rounded-xl bg-[#0a0a0f] border border-[#1e293b] text-white placeholder:text-[#64748b] focus:border-[#0ea5e9] focus:outline-none transition-colors"
-              />
-              <button
-                type="submit"
-                className="px-6 py-3 rounded-xl bg-gradient-to-r from-[#0ea5e9] to-[#06b6d4] text-white font-medium hover:opacity-90 transition-opacity whitespace-nowrap"
-              >
-                Subscribe
-              </button>
-            </form>
-          </motion.div>
-        </div>
-      </section>
     </div>
   );
 }

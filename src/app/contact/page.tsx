@@ -1,16 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import {
   Mail,
   MessageSquare,
   Send,
-  MapPin,
   Clock,
   ArrowRight,
   CheckCircle,
-  Building,
+  CreditCard,
   HelpCircle,
   Zap,
 } from "lucide-react";
@@ -20,28 +18,28 @@ const contactOptions = [
     icon: MessageSquare,
     title: "General Inquiries",
     description: "Questions about PDFflow or feedback",
-    email: "hello@pdfflow.com",
+    email: "hello@pdfflow.space",
     color: "from-blue-500 to-cyan-500",
   },
   {
-    icon: Building,
-    title: "Enterprise Sales",
-    description: "Custom plans for your organization",
-    email: "sales@pdfflow.com",
+    icon: CreditCard,
+    title: "Billing & Refunds",
+    description: "Plan changes, cancellations and refunds",
+    email: "hello@pdfflow.space",
     color: "from-violet-500 to-purple-500",
   },
   {
     icon: HelpCircle,
     title: "Support",
     description: "Technical help and troubleshooting",
-    email: "support@pdfflow.com",
+    email: "hello@pdfflow.space",
     color: "from-emerald-500 to-teal-500",
   },
   {
     icon: Zap,
     title: "Partnerships",
     description: "Integration and partnership opportunities",
-    email: "partners@pdfflow.com",
+    email: "hello@pdfflow.space",
     color: "from-orange-500 to-amber-500",
   },
 ];
@@ -55,16 +53,33 @@ export default function ContactPage() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSubmitError(null);
 
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1500));
-
-    setIsSubmitting(false);
-    setIsSubmitted(true);
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formState),
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        throw new Error(data.error || "Something went wrong.");
+      }
+      setIsSubmitted(true);
+    } catch (error) {
+      setSubmitError(
+        error instanceof Error
+          ? error.message
+          : "Something went wrong. Please email hello@pdfflow.space directly."
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -128,7 +143,7 @@ export default function ContactPage() {
                   </div>
                   <h3 className="text-xl font-semibold text-white mb-2">Message sent!</h3>
                   <p className="text-white/60 mb-6">
-                    Thanks for reaching out. We&apos;ll get back to you within 24 hours.
+                    Thanks for reaching out. We&apos;ll reply to the email you gave us as soon as we can.
                   </p>
                   <button
                     onClick={() => {
@@ -215,6 +230,9 @@ export default function ContactPage() {
                       </>
                     )}
                   </button>
+                  {submitError && (
+                    <p role="alert" className="text-sm text-red-400">{submitError}</p>
+                  )}
                 </form>
               )}
             </div>
@@ -227,35 +245,9 @@ export default function ContactPage() {
                   Response Time
                 </h3>
                 <p className="text-white/60">
-                  We typically respond within <span className="text-white font-medium">24 hours</span> on business days.
-                  For urgent matters, email us directly with &quot;URGENT&quot; in the subject line.
+                  PDFflow is run by a small team, so replies can take a few business days.
+                  For billing or refund questions, include the email you used to subscribe.
                 </p>
-              </div>
-
-              <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.06]">
-                <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-                  <MapPin className="w-5 h-5 text-white/60" />
-                  Location
-                </h3>
-                <p className="text-white/60">
-                  PDFflow is a remote-first company with team members across the globe.
-                  We&apos;re headquartered in <span className="text-white font-medium">San Francisco, CA</span>.
-                </p>
-              </div>
-
-              <div className="p-6 rounded-2xl bg-gradient-to-br from-blue-500/10 to-violet-500/10 border border-white/10">
-                <h3 className="text-lg font-semibold text-white mb-2">
-                  Looking for help?
-                </h3>
-                <p className="text-white/60 mb-4">
-                  Check out our help center for instant answers to common questions.
-                </p>
-                <Link
-                  href="/help"
-                  className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 font-medium"
-                >
-                  Visit Help Center <ArrowRight className="w-4 h-4" />
-                </Link>
               </div>
 
               <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.06]">
@@ -264,9 +256,7 @@ export default function ContactPage() {
                   Email Directly
                 </h3>
                 <div className="space-y-2 text-white/60">
-                  <p>General: <a href="mailto:hello@pdfflow.com" className="text-blue-400 hover:text-blue-300">hello@pdfflow.com</a></p>
-                  <p>Support: <a href="mailto:support@pdfflow.com" className="text-blue-400 hover:text-blue-300">support@pdfflow.com</a></p>
-                  <p>Sales: <a href="mailto:sales@pdfflow.com" className="text-blue-400 hover:text-blue-300">sales@pdfflow.com</a></p>
+                  <p><a href="mailto:hello@pdfflow.space" className="text-blue-400 hover:text-blue-300">hello@pdfflow.space</a></p>
                 </div>
               </div>
             </div>

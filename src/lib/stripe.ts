@@ -23,11 +23,19 @@ export const stripe = {
   get billingPortal() { return getStripe().billingPortal; },
 };
 
-// Price IDs - you'll need to create these in your Stripe Dashboard
-// Go to Products > Add Product > Add Price
+// Price IDs - create these in your Stripe Dashboard (Products > Add Product > Add Price)
 // Monthly: $4.99/month recurring subscription
-// Lifetime: $24.99 one-time payment
-export const PRICES = {
-  PRO_MONTHLY: process.env.STRIPE_PRICE_MONTHLY || "price_monthly_placeholder",
-  PRO_LIFETIME: process.env.STRIPE_PRICE_LIFETIME || "price_lifetime_placeholder",
-};
+// Annual: $39.99/year recurring subscription
+// Throws instead of falling back to a placeholder so a missing env var fails loudly at checkout.
+export type PriceType = "monthly" | "annual";
+
+export function getPriceId(priceType: PriceType): string {
+  const priceId =
+    priceType === "annual"
+      ? process.env.STRIPE_PRICE_ANNUAL
+      : process.env.STRIPE_PRICE_MONTHLY;
+  if (!priceId) {
+    throw new Error(`Stripe price for "${priceType}" is not configured`);
+  }
+  return priceId;
+}

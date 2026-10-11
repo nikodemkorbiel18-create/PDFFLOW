@@ -20,7 +20,7 @@ const sections = [
     content: "You agree to:",
     list: [
       "Use the Service only for lawful purposes",
-      "Not upload files containing malware or malicious content",
+      "Not use the Service with files containing malware or malicious content",
       "Not attempt to circumvent usage limits or security measures",
       "Not use the Service to process illegal or infringing content",
       "Maintain the security of your account credentials",
@@ -28,34 +28,43 @@ const sections = [
   },
   {
     title: "4. Intellectual Property",
-    content: "You retain all rights to the files you upload and process through our Service. We do not claim ownership of your content. However, you grant us a limited license to process your files as necessary to provide the Service.",
+    content: "You retain all rights to the files you process with the Service. Files are processed in your browser and are not uploaded to us, and we do not claim any ownership of or license to your content.",
     footer: "The PDFflow name, logo, and all related trademarks are our property. You may not use these without our written permission.",
   },
   {
-    title: "5. Free Tier Limitations",
-    content: "The free tier is subject to the following limitations:",
+    title: "5. Free Tier",
+    content: "The free tier includes:",
     list: [
-      "2 file operations per day",
-      "Maximum file size of 10MB",
-      "Processing happens client-side (in your browser)",
+      "Unlimited use of tools marked as free",
+      "4 free uses in total of tools marked as premium",
+      "A maximum file size of 10MB",
+      "A small \"Processed with PDFflow.space\" line on the last page of some outputs",
     ],
-    footer: "We reserve the right to modify these limitations at any time.",
+    footer: "We may change free-tier limits in the future. Changes will not affect a paid plan during a period you have already paid for.",
   },
   {
     title: "6. Paid Subscriptions",
     content: null,
     subsections: [
       {
-        title: "Billing",
-        content: "Paid subscriptions are billed monthly or annually, depending on your chosen plan. Payment is processed through Stripe.",
+        title: "Plans and Automatic Renewal",
+        content: "PDFflow Pro is offered as a monthly subscription ($4.99 USD per month) or an annual subscription ($39.99 USD per year), plus any applicable taxes. Your subscription renews automatically at the end of each billing period, and your payment method is charged the then-current price, until you cancel. Payments are processed by Stripe. We will give you advance notice of any price change, and it will apply from your next renewal after the notice.",
       },
       {
         title: "Cancellation",
-        content: "You may cancel your subscription at any time. Your access will continue until the end of your current billing period.",
+        content: "You may cancel at any time from Settings > Account > Manage billing, or by emailing hello@pdfflow.space. Cancellation stops future renewals; you keep Pro until the end of the period you have already paid for.",
+      },
+      {
+        title: "Failed Payments",
+        content: "If a renewal payment fails, Stripe will retry it for a limited time and you keep Pro during that period. If payment still cannot be collected, your account returns to the free tier.",
+      },
+      {
+        title: "Legacy Lifetime Purchases",
+        content: "Customers who bought the previously offered one-time \"Lifetime\" Pro option keep Pro access for as long as PDFflow operates the Service.",
       },
       {
         title: "Refunds",
-        content: "We offer a 7-day money-back guarantee for new subscribers. Refund requests after this period are handled on a case-by-case basis.",
+        content: "If you are a new subscriber and are not happy with Pro, email hello@pdfflow.space within 7 days of your first payment for a full refund. Later refund requests are handled case by case. This does not limit any refund or withdrawal rights you have under the law where you live.",
       },
     ],
   },
@@ -70,7 +79,7 @@ const sections = [
   },
   {
     title: "9. Limitation of Liability",
-    content: "TO THE MAXIMUM EXTENT PERMITTED BY LAW, WE SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES ARISING FROM YOUR USE OF THE SERVICE.",
+    content: "TO THE MAXIMUM EXTENT PERMITTED BY LAW, WE SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR FOR ANY LOSS OR CORRUPTION OF DATA OR FILES, ARISING FROM YOUR USE OF THE SERVICE. YOU ARE RESPONSIBLE FOR KEEPING COPIES OF YOUR ORIGINAL FILES AND CHECKING OUTPUTS BEFORE RELYING ON THEM. OUR TOTAL LIABILITY FOR ANY CLAIM IS LIMITED TO THE AMOUNT YOU PAID US IN THE 12 MONTHS BEFORE THE CLAIM. NOTHING IN THESE TERMS LIMITS LIABILITY THAT CANNOT BE LIMITED BY LAW.",
     isLegal: true,
   },
   {
@@ -88,7 +97,7 @@ const sections = [
   {
     title: "13. Contact",
     content: "For questions about these Terms, please contact us at:",
-    footer: "Email: legal@pdfflow.com",
+    footer: "Email: hello@pdfflow.space",
   },
 ];
 
@@ -112,7 +121,7 @@ export default function TermsOfService() {
               Terms of Service
             </h1>
             <p className="mt-4 text-[var(--muted-foreground)]">
-              Last updated: January 2025
+              Last updated: October 11, 2026
             </p>
           </div>
 

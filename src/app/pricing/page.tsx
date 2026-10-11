@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Check, Sparkles, Zap, Infinity } from "lucide-react";
+import { Check, Sparkles, Zap } from "lucide-react";
 import Link from "next/link";
 import { StripeCheckoutButton } from "@/components/StripeCheckoutButton";
 import { getFreeToolsCount, getPremiumToolsCount } from "@/config/tools";
@@ -10,7 +10,7 @@ const freeToolsCount = getFreeToolsCount();
 const premiumToolsCount = getPremiumToolsCount();
 
 export default function Pricing() {
-  const [billingType, setBillingType] = useState<"monthly" | "lifetime">("lifetime");
+  const [billingType, setBillingType] = useState<"monthly" | "annual">("annual");
 
   return (
     <div className="min-h-[80vh]">
@@ -93,7 +93,7 @@ export default function Pricing() {
             <div className="relative flex flex-col rounded-3xl border border-[#0ea5e9] bg-gradient-to-b from-[#0ea5e9]/5 to-purple-500/5 p-8 transition-all shadow-[0_0_40px_rgba(14,165,233,0.15)] lg:scale-105">
               <div className="absolute -top-4 left-1/2 -translate-x-1/2">
                 <span className="rounded-full bg-gradient-to-r from-[#0ea5e9] to-purple-500 px-4 py-1.5 text-sm font-medium text-white shadow-lg shadow-[#0ea5e9]/25">
-                  Best Value
+                  Recommended
                 </span>
               </div>
 
@@ -113,7 +113,7 @@ export default function Pricing() {
                   <div className="relative bg-[#1c1c1e] p-[3px] rounded-[10px] w-[220px]">
                     <div
                       className={`absolute top-[3px] bottom-[3px] w-[calc(50%-3px)] rounded-[8px] bg-[#636366] shadow-sm transition-transform duration-200 ease-out ${
-                        billingType === "lifetime" ? "translate-x-[calc(100%+3px)]" : "translate-x-0"
+                        billingType === "annual" ? "translate-x-[calc(100%+3px)]" : "translate-x-0"
                       }`}
                     />
                     <div className="relative grid grid-cols-2">
@@ -126,12 +126,12 @@ export default function Pricing() {
                         Monthly
                       </button>
                       <button
-                        onClick={() => setBillingType("lifetime")}
+                        onClick={() => setBillingType("annual")}
                         className={`py-2 text-[13px] font-semibold rounded-[8px] transition-colors duration-200 z-10 text-center ${
-                          billingType === "lifetime" ? "text-white" : "text-[#8e8e93]"
+                          billingType === "annual" ? "text-white" : "text-[#8e8e93]"
                         }`}
                       >
-                        Lifetime
+                        Annual
                       </button>
                     </div>
                   </div>
@@ -149,14 +149,13 @@ export default function Pricing() {
                   ) : (
                     <>
                       <div>
-                        <span className="text-5xl font-semibold text-white">$24.99</span>
-                        <span className="text-[#94a3b8] ml-1">one-time</span>
+                        <span className="text-5xl font-semibold text-white">$39.99</span>
+                        <span className="text-[#94a3b8] ml-1">/year</span>
                       </div>
                       <p className="text-sm text-[#94a3b8] flex items-center justify-center gap-2 mt-1">
-                        <Infinity className="h-4 w-4" />
-                        Forever access
+                        About $3.33/month
                         <span className="px-2 py-0.5 text-[11px] font-bold rounded-full bg-emerald-500 text-white">
-                          Save 58%
+                          Save 33% vs monthly
                         </span>
                       </p>
                     </>
@@ -166,13 +165,11 @@ export default function Pricing() {
 
               <ul className="mb-8 flex-1 space-y-4">
                 {[
-                  "All 100 tools unlimited",
+                  `All ${freeToolsCount + premiumToolsCount} tools, unlimited use`,
                   "Max 100MB per file",
-                  "Unlimited batch processing",
                   "Advanced compression options",
-                  "Priority processing",
-                  "No branding on outputs",
-                  "Priority support",
+                  "No \"Processed with PDFflow\" footer on outputs",
+                  "Email support",
                 ].map((feature) => (
                   <li key={feature} className="flex items-start gap-3">
                     <div className="flex items-center justify-center w-5 h-5 rounded-full bg-emerald-500/10 mt-0.5">
@@ -183,7 +180,14 @@ export default function Pricing() {
                 ))}
               </ul>
 
-              <StripeCheckoutButton isLifetime={billingType === "lifetime"} />
+              <StripeCheckoutButton plan={billingType} />
+              <p className="mt-4 text-xs text-[#64748b] text-center leading-relaxed">
+                {billingType === "monthly"
+                  ? "Renews automatically at $4.99/month"
+                  : "Renews automatically at $39.99/year"}{" "}
+                until you cancel. Cancel anytime in Settings &gt; Account &gt; Manage billing. Prices in USD; taxes may apply. See our{" "}
+                <Link href="/terms" className="underline hover:text-[#94a3b8]">Terms</Link>.
+              </p>
             </div>
           </div>
 
@@ -204,11 +208,11 @@ export default function Pricing() {
                 },
                 {
                   q: "Can I cancel anytime?",
-                  a: "Yes, monthly subscriptions can be cancelled anytime. You'll keep access until the end of your billing period. Lifetime is a one-time purchase."
+                  a: "Yes. Both plans renew automatically until you cancel, and you can cancel anytime from Settings > Account > Manage billing. You keep Pro until the end of the period you've paid for."
                 },
                 {
                   q: "Is my data secure?",
-                  a: "Yes! All processing happens in your browser - your files never leave your device. We can't see or access your documents."
+                  a: "PDF processing happens in your browser, so your files aren't uploaded to our servers and we can't see your documents."
                 },
               ].map((faq, index) => (
                 <div
@@ -232,7 +236,7 @@ export default function Pricing() {
               <a href="mailto:hello@pdfflow.space" className="text-[#0ea5e9] font-medium hover:opacity-80 transition-opacity">
                 Contact us
               </a>
-              {" "}and we&apos;ll get back to you within 24 hours.
+              {" "}and we&apos;ll get back to you as soon as we can.
             </p>
           </div>
         </div>

@@ -31,7 +31,7 @@ const features = [
   },
   {
     icon: Shield,
-    title: "100% Private",
+    title: "Private by Design",
     description: "Files are compressed locally in your browser. Your data stays with you.",
   },
   {

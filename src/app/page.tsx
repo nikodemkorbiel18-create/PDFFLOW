@@ -9,9 +9,6 @@ import {
   ArrowRight,
   FileText,
   Sparkles,
-  Check,
-  X,
-  Mail,
   Smartphone,
   Monitor,
   WifiOff,
@@ -35,8 +32,8 @@ const features = [
     icon: Zap,
   },
   {
-    name: "100% Private",
-    description: "Files never leave your device. Fully local.",
+    name: "Private by Design",
+    description: "PDFs are processed in your browser, not uploaded.",
     icon: Shield,
   },
   {
@@ -44,63 +41,6 @@ const features = [
     description: "Try all tools free. Upgrade for more.",
     icon: Gift,
   },
-];
-
-const testimonials = [
-  {
-    initials: "S.C.",
-    role: "Designer at a Tech Startup",
-    content: "Finally, PDF tools that just work. No bloated software, no sketchy uploads.",
-    color: "from-blue-500 to-cyan-500",
-  },
-  {
-    initials: "M.J.",
-    role: "Freelance Developer",
-    content: "The privacy aspect is huge - my clients' data stays on my machine. Essential for contract work.",
-    color: "from-violet-500 to-purple-500",
-  },
-  {
-    initials: "E.R.",
-    role: "Marketing at a SaaS Company",
-    content: "Merged 50+ PDFs for our annual report in seconds. The batch processing is incredibly fast.",
-    color: "from-emerald-500 to-teal-500",
-  },
-  {
-    initials: "D.P.",
-    role: "Small Business Owner",
-    content: "Switched from Adobe. PDFflow does everything I need without the expensive subscription.",
-    color: "from-orange-500 to-amber-500",
-  },
-  {
-    initials: "R.T.",
-    role: "Legal Professional",
-    content: "The compression tool is excellent. Reduced a 50MB contract to under 5MB for email.",
-    color: "from-pink-500 to-rose-500",
-  },
-  {
-    initials: "A.R.",
-    role: "Operations at a Consulting Firm",
-    content: "We process hundreds of PDFs weekly. The local processing means no compliance headaches.",
-    color: "from-indigo-500 to-blue-500",
-  },
-];
-
-const competitors = [
-  { name: "PDFflow", highlight: true },
-  { name: "Adobe Acrobat", highlight: false },
-  { name: "Smallpdf", highlight: false },
-  { name: "iLovePDF", highlight: false },
-];
-
-const comparisonFeatures = [
-  { feature: "100% Browser-based", pdfflow: true, adobe: false, smallpdf: false, ilovepdf: false },
-  { feature: "Files Stay Local", pdfflow: true, adobe: false, smallpdf: false, ilovepdf: false },
-  { feature: "No Account Required", pdfflow: true, adobe: false, smallpdf: true, ilovepdf: true },
-  { feature: "Free Tools", pdfflow: true, adobe: false, smallpdf: true, ilovepdf: true },
-  { feature: "No Watermarks (Free)", pdfflow: true, adobe: false, smallpdf: false, ilovepdf: false },
-  { feature: "Modern UI", pdfflow: true, adobe: false, smallpdf: true, ilovepdf: false },
-  { feature: "No Ads", pdfflow: true, adobe: true, smallpdf: false, ilovepdf: false },
-  { feature: "Batch Processing", pdfflow: true, adobe: true, smallpdf: false, ilovepdf: false },
 ];
 
 const containerVariants = {
@@ -172,7 +112,7 @@ export default function Home() {
             variants={itemVariants}
           >
             <Shield className="w-4 h-4 text-emerald-500" />
-            <span>Everything stays in your browser. No uploads. No tracking.</span>
+            <span>Your PDFs are processed in your browser and never uploaded to our servers.</span>
           </motion.div>
 
           <motion.div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4" variants={itemVariants}>
@@ -198,7 +138,7 @@ export default function Home() {
           <div className="flex items-center justify-center gap-8 flex-wrap text-sm text-[#94a3b8]">
             <div className="flex items-center gap-2">
               <Shield className="w-4 h-4 text-emerald-500" />
-              <span>100% Local Processing</span>
+              <span>In-browser Processing</span>
             </div>
             <div className="flex items-center gap-2">
               <Zap className="w-4 h-4 text-amber-500" />
@@ -206,7 +146,7 @@ export default function Home() {
             </div>
             <div className="flex items-center gap-2">
               <Gift className="w-4 h-4 text-blue-500" />
-              <span>Free to Use</span>
+              <span>30 Tools Free</span>
             </div>
           </div>
         </div>
@@ -226,7 +166,7 @@ export default function Home() {
               {
                 step: "01",
                 title: "Select your tool",
-                description: "Choose from 100+ PDF tools. Merge, split, compress, convert, and more.",
+                description: "Choose from 100 PDF tools. Merge, split, compress, convert, and more.",
                 icon: Sparkles,
               },
               {
@@ -394,7 +334,7 @@ export default function Home() {
                     <div className="w-2.5 h-2.5 rounded-full bg-[#10b981]/60" />
                   </div>
                   <div className="flex-1 mx-4">
-                    <div className="bg-[#1e293b] rounded px-3 py-1 text-xs text-[#64748b] text-center">pdfflow.app</div>
+                    <div className="bg-[#1e293b] rounded px-3 py-1 text-xs text-[#64748b] text-center">pdfflow.space</div>
                   </div>
                 </div>
                 <div className="p-6">
@@ -431,103 +371,6 @@ export default function Home() {
           </div>
         </div>
         <GlowingBorder delay={5} />
-      </section>
-
-      {/* Testimonials */}
-      <section className="py-20 bg-black relative">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <motion.div className="text-center mb-12" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <p className="text-xs font-medium text-[#64748b] uppercase tracking-widest mb-3">What People Say</p>
-            <h2 className="text-3xl sm:text-4xl font-semibold text-white tracking-tight">Real feedback from real users</h2>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {testimonials.map((t, index) => (
-              <motion.div key={t.initials} className="p-5 rounded-xl bg-[#0a0a0f] border border-[#1e293b]" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.1 }}>
-                <div className="flex items-center gap-3 mb-3">
-                  <div className={`w-10 h-10 rounded-full bg-gradient-to-br ${t.color} flex items-center justify-center text-white text-sm font-semibold`}>
-                    {t.initials}
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-white">{t.initials}</p>
-                    <p className="text-xs text-[#64748b]">{t.role}</p>
-                  </div>
-                </div>
-                <p className="text-sm text-[#94a3b8] leading-relaxed">&ldquo;{t.content}&rdquo;</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-        <GlowingBorder delay={7.5} />
-      </section>
-
-      {/* Comparison Section */}
-      <section className="py-20 bg-[#050508] relative">
-        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <motion.div className="text-center mb-12" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <p className="text-xs font-medium text-[#64748b] uppercase tracking-widest mb-3">Comparison</p>
-            <h2 className="text-3xl sm:text-4xl font-semibold text-white tracking-tight">Why choose PDFflow?</h2>
-            <p className="mt-4 text-[#94a3b8] max-w-2xl mx-auto">See how we stack up against the competition</p>
-          </motion.div>
-
-          <motion.div
-            className="overflow-x-auto rounded-xl border border-[#1e293b]"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <table className="w-full min-w-[600px]">
-              <thead>
-                <tr className="border-b border-[#1e293b]">
-                  <th className="text-left p-4 text-sm font-medium text-[#64748b]">Feature</th>
-                  {competitors.map((c) => (
-                    <th
-                      key={c.name}
-                      className={`p-4 text-sm font-medium text-center ${c.highlight ? "text-[#0ea5e9] bg-[#0ea5e9]/5" : "text-white"}`}
-                    >
-                      {c.name}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {comparisonFeatures.map((row, index) => (
-                  <tr key={row.feature} className={index < comparisonFeatures.length - 1 ? "border-b border-[#1e293b]" : ""}>
-                    <td className="p-4 text-sm text-[#94a3b8]">{row.feature}</td>
-                    <td className="p-4 text-center bg-[#0ea5e9]/5">
-                      {row.pdfflow ? <Check className="w-5 h-5 text-emerald-500 mx-auto" /> : <X className="w-5 h-5 text-[#475569] mx-auto" />}
-                    </td>
-                    <td className="p-4 text-center">
-                      {row.adobe ? <Check className="w-5 h-5 text-emerald-500 mx-auto" /> : <X className="w-5 h-5 text-[#475569] mx-auto" />}
-                    </td>
-                    <td className="p-4 text-center">
-                      {row.smallpdf ? <Check className="w-5 h-5 text-emerald-500 mx-auto" /> : <X className="w-5 h-5 text-[#475569] mx-auto" />}
-                    </td>
-                    <td className="p-4 text-center">
-                      {row.ilovepdf ? <Check className="w-5 h-5 text-emerald-500 mx-auto" /> : <X className="w-5 h-5 text-[#475569] mx-auto" />}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </motion.div>
-
-          <motion.div
-            className="mt-8 text-center"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-          >
-            <Link
-              href="/compare"
-              className="inline-flex items-center gap-2 text-sm text-[#0ea5e9] hover:text-[#22d3ee] transition-colors"
-            >
-              View detailed comparisons
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </motion.div>
-        </div>
-        <GlowingBorder delay={10} />
       </section>
 
       {/* CTA Section */}
@@ -619,56 +462,13 @@ export default function Home() {
               </div>
               <div>
                 <h4 className="text-base font-semibold text-white mb-1">Works Offline</h4>
-                <p className="text-sm text-[#94a3b8]">Once installed, PDFflow works without internet. Your files are processed locally on your device.</p>
+                <p className="text-sm text-[#94a3b8]">Once installed, core tools you&apos;ve opened can keep working without a connection. Your files are processed on your device.</p>
               </div>
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Email Signup Section */}
-      <section className="py-20 bg-[#050508] border-t border-[#1e293b]">
-        <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#0ea5e9]/20 to-[#06b6d4]/20 flex items-center justify-center mx-auto mb-6">
-              <Mail className="w-7 h-7 text-[#0ea5e9]" />
-            </div>
-            <h2 className="text-2xl sm:text-3xl font-semibold text-white tracking-tight mb-3">Stay in the loop</h2>
-            <p className="text-[#94a3b8] mb-8">Get notified about new tools, features, and tips. No spam, ever.</p>
-
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                const form = e.target as HTMLFormElement;
-                const emailInput = form.querySelector('input[type="email"]') as HTMLInputElement;
-                if (emailInput.value) {
-                  const subscribers = JSON.parse(localStorage.getItem("emailSubscribers") || "[]");
-                  subscribers.push({ email: emailInput.value, timestamp: new Date().toISOString() });
-                  localStorage.setItem("emailSubscribers", JSON.stringify(subscribers));
-                  emailInput.value = "";
-                  alert("Thanks for subscribing!");
-                }
-              }}
-              className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
-            >
-              <input
-                type="email"
-                placeholder="Enter your email"
-                required
-                className="flex-1 px-4 py-3 rounded-xl bg-[#0a0a0f] border border-[#1e293b] text-white placeholder:text-[#64748b] focus:border-[#0ea5e9] focus:outline-none transition-colors"
-              />
-              <button
-                type="submit"
-                className="px-6 py-3 rounded-xl bg-gradient-to-r from-[#0ea5e9] to-[#06b6d4] text-white font-medium hover:opacity-90 transition-opacity whitespace-nowrap"
-              >
-                Subscribe
-              </button>
-            </form>
-
-            <p className="mt-4 text-xs text-[#64748b]">No spam, ever. Unsubscribe anytime.</p>
-          </motion.div>
-        </div>
-      </section>
 
       <AuthModal isOpen={authModalOpen} onClose={() => setAuthModalOpen(false)} initialMode="signup" />
       <ToolRequestModal isOpen={toolRequestOpen} onClose={() => setToolRequestOpen(false)} />

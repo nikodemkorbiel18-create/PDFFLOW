@@ -25,7 +25,14 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { type, email, name, endDate } = body;
+    const { type, name, endDate } = body;
+
+    // Signed-in users may only email themselves, and only the self-serve types.
+    // Otherwise anyone with an account could send PDFflow-branded mail to any address.
+    if (!isInternalCall && !['welcome', 'usage_limit'].includes(type)) {
+      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+    }
+    const email = isInternalCall ? body.email : user?.email;
 
     if (!type || !email) {
       return NextResponse.json(

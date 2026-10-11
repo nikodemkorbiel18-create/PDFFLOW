@@ -126,3 +126,34 @@ CREATE TRIGGER update_subscriptions_updated_at
 
 CREATE INDEX IF NOT EXISTS idx_subscriptions_user_id ON public.subscriptions(user_id);
 CREATE INDEX IF NOT EXISTS idx_usage_user_date ON public.usage(user_id, date);
+
+-- ============================================
+-- PAYMENTS & PREMIUM USAGE (added Oct 2026)
+-- Safe to re-run on an existing database.
+-- ============================================
+
+-- Stripe customer IDs are stored on subscriptions (checkout + webhook use this column)
+CREATE INDEX IF NOT EXISTS idx_subscriptions_stripe_customer_id
+  ON public.subscriptions(stripe_customer_id);
+
+-- Lifetime premium-tool usage for signed-in free users (read by src/lib/usage.ts)
+CREATE TABLE IF NOT EXISTS public.premium_usage (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  user_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE NOT NULL UNIQUE,
+  total_count INTEGER DEFAULT 0,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+ALTER TABLE public.premium_usage ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Users can view own premium usage" ON public.premium_usage;
+CREATE POLICY "Users can view own premium usage" ON public.premium_usage
+  FOR SELECT USING (auth.uid() = user_id);
+
+DROP POLICY IF EXISTS "Users can insert own premium usage" ON public.premium_usage;
+CREATE POLICY "Users can insert own premium usage" ON public.premium_usage
+  FOR INSERT WITH CHECK (auth.uid() = user_id);
+
+DROP POLICY IF EXISTS "Users can update own premium usage" ON public.premium_usage;
+CREATE POLICY "Users can update own premium usage" ON public.premium_usage
+  FOR UPDATE USING (auth.uid() = user_id);

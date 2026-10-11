@@ -343,9 +343,9 @@ function ActivityItem({ item, onRemove }: { item: FileHistoryItem; onRemove: () 
 // Main Dashboard Component
 export function DashboardContent({ profile, usage }: DashboardContentProps) {
   const router = useRouter();
-  const { isPro } = useAuth();
+  const { isPro, refreshUser } = useAuth();
+  const [checkoutState, setCheckoutState] = useState<"idle" | "pending" | "done" | "slow">("idle");
   const todayUsage = usage?.file_count ?? 0;
-  const maxFiles = isPro ? Infinity : 2;
 
   const [fileHistory, setFileHistory] = useState<FileHistoryItem[]>([]);
   const [workflows, setWorkflows] = useState<WorkflowType[]>([]);
@@ -358,6 +358,31 @@ export function DashboardContent({ profile, usage }: DashboardContentProps) {
     setWorkflows(getWorkflows());
     setFavorites(getFavorites());
   }, []);
+
+  // After Stripe checkout, Pro is granted by the webhook, which can land a few
+  // seconds after the redirect. Poll until it shows up so buyers see their upgrade.
+  useEffect(() => {
+    if (new URLSearchParams(window.location.search).get("checkout") !== "success") return;
+    setCheckoutState("pending");
+    let attempts = 0;
+    const interval = setInterval(() => {
+      attempts += 1;
+      refreshUser();
+      if (attempts >= 15) {
+        clearInterval(interval);
+        setCheckoutState((s) => (s === "pending" ? "slow" : s));
+      }
+    }, 2000);
+    return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (isPro && checkoutState === "pending") {
+      setCheckoutState("done");
+      window.history.replaceState(null, "", "/dashboard");
+    }
+  }, [isPro, checkoutState]);
 
   // Keyboard shortcuts
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
@@ -453,6 +478,26 @@ export function DashboardContent({ profile, usage }: DashboardContentProps) {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 py-8">
+        {checkoutState !== "idle" && (
+          <div
+            role="status"
+            className={`mb-8 rounded-xl border px-4 py-3 text-sm ${
+              checkoutState === "slow"
+                ? "border-amber-500/30 bg-amber-500/10 text-amber-200"
+                : "border-emerald-500/30 bg-emerald-500/10 text-emerald-200"
+            }`}
+          >
+            {checkoutState === "pending" && "Payment received — activating your Pro plan…"}
+            {checkoutState === "done" && "You're on PDFflow Pro. Thanks for your support!"}
+            {checkoutState === "slow" && (
+              <>
+                Your payment went through, but activation is taking longer than usual. Refresh in a minute, and if
+                Pro still isn&apos;t active email{" "}
+                <a href="mailto:hello@pdfflow.space" className="underline">hello@pdfflow.space</a> and we&apos;ll sort it out.
+              </>
+            )}
+          </div>
+        )}
         {/* Header */}
         <header className="flex items-center justify-between mb-12">
           <div className="flex items-center gap-5">
@@ -532,8 +577,8 @@ export function DashboardContent({ profile, usage }: DashboardContentProps) {
           <StatCard
             icon={Activity}
             label="Today's Usage"
-            value={`${todayUsage}${!isPro ? `/${maxFiles}` : ""}`}
-            subtext={isPro ? "Unlimited" : "Daily limit"}
+            value={`${todayUsage}`}
+            subtext={isPro ? "Unlimited" : "Files processed"}
             gradient="from-violet-500 to-purple-500"
           />
           <StatCard
@@ -722,7 +767,7 @@ export function DashboardContent({ profile, usage }: DashboardContentProps) {
                     <p className="text-xs text-white/40">Latest updates</p>
                   </div>
                 </Link>
-                <a href="mailto:support@pdfflow.com" className="flex items-center gap-3 p-3 rounded-xl hover:bg-white/[0.04] transition-colors group">
+                <a href="mailto:hello@pdfflow.space" className="flex items-center gap-3 p-3 rounded-xl hover:bg-white/[0.04] transition-colors group">
                   <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-orange-500/20">
                     <HelpCircle className="h-4 w-4 text-orange-400" />
                   </div>
@@ -753,7 +798,7 @@ export function DashboardContent({ profile, usage }: DashboardContentProps) {
                   </li>
                   <li className="flex items-center gap-2 text-sm text-white/60">
                     <div className="h-1.5 w-1.5 rounded-full bg-purple-400" />
-                    Priority support
+                    Files up to 100MB
                   </li>
                   <li className="flex items-center gap-2 text-sm text-white/60">
                     <div className="h-1.5 w-1.5 rounded-full bg-pink-400" />

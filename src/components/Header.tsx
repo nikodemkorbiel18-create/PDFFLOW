@@ -171,7 +171,7 @@ export function Header() {
               </Link>
 
               <Link href="/enterprise" className="px-4 py-2 text-sm text-[#94a3b8] hover:text-white hover:bg-[#1e293b] rounded-lg transition-colors">
-                Enterprise
+                Teams
               </Link>
 
               <Link href="/about" className="px-4 py-2 text-sm text-[#94a3b8] hover:text-white hover:bg-[#1e293b] rounded-lg transition-colors">
@@ -352,7 +352,7 @@ export function Header() {
               Pricing
             </Link>
             <Link href="/enterprise" className="block px-4 py-3 text-sm font-medium rounded-xl hover:bg-[#1e293b] transition-colors" onClick={() => setMobileMenuOpen(false)}>
-              Enterprise
+              Teams
             </Link>
             <Link href="/about" className="block px-4 py-3 text-sm font-medium rounded-xl hover:bg-[#1e293b] transition-colors" onClick={() => setMobileMenuOpen(false)}>
               About

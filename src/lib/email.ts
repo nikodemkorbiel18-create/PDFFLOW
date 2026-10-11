@@ -17,15 +17,18 @@ function getResendClient(): Resend | null {
 const FROM_EMAIL = process.env.FROM_EMAIL || 'PDFflow <onboarding@resend.dev>';
 const APP_NAME = 'PDFflow';
 const APP_URL = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+// Our emails tell people to reply, so replies must reach a monitored inbox
+const REPLY_TO_EMAIL = process.env.REPLY_TO_EMAIL || 'hello@pdfflow.space';
 
 interface SendEmailOptions {
   to: string;
   subject: string;
   html: string;
   text?: string;
+  replyTo?: string;
 }
 
-export async function sendEmail({ to, subject, html, text }: SendEmailOptions) {
+export async function sendEmail({ to, subject, html, text, replyTo }: SendEmailOptions) {
   try {
     const resend = getResendClient();
 
@@ -36,6 +39,7 @@ export async function sendEmail({ to, subject, html, text }: SendEmailOptions) {
 
     const { data, error } = await resend.emails.send({
       from: FROM_EMAIL,
+      replyTo: replyTo || REPLY_TO_EMAIL,
       to,
       subject,
       html,
@@ -80,8 +84,8 @@ export async function sendWelcomeEmail(email: string, name?: string) {
 
   <p>With your free account, you can:</p>
   <ul style="color: #555;">
-    <li>Process up to <strong>2 files per day</strong></li>
-    <li>Access all 20+ PDF tools</li>
+    <li>Use <strong>30 free tools</strong> as often as you like</li>
+    <li>Try each of our 70 premium tools with <strong>4 free uses</strong></li>
     <li>Work with files up to <strong>10MB</strong></li>
   </ul>
 
@@ -99,12 +103,12 @@ export async function sendWelcomeEmail(email: string, name?: string) {
 
   <p style="color: #999; font-size: 12px; text-align: center;">
     © ${new Date().getFullYear()} PDFflow. All rights reserved.<br>
-    <a href="${APP_URL}" style="color: #999;">pdfflow.com</a>
+    <a href="${APP_URL}" style="color: #999;">pdfflow.space</a>
   </p>
 </body>
 </html>
     `,
-    text: `Hey ${firstName}!\n\nWelcome to PDFflow! We're excited to have you on board.\n\nWith your free account, you can:\n- Process up to 2 files per day\n- Access all 20+ PDF tools\n- Work with files up to 10MB\n\nGo to your dashboard: ${APP_URL}/dashboard\n\nNeed more power? Upgrade to Pro for unlimited processing.\n\n© ${new Date().getFullYear()} PDFflow`,
+    text: `Hey ${firstName}!\n\nWelcome to PDFflow! We're excited to have you on board.\n\nWith your free account, you can:\n- Use 30 free tools as often as you like\n- Try our 70 premium tools with 4 free uses\n- Work with files up to 10MB\n\nGo to your dashboard: ${APP_URL}/dashboard\n\nNeed more power? Upgrade to Pro for unlimited use of every tool.\n\n© ${new Date().getFullYear()} PDFflow`,
   });
 }
 
@@ -114,7 +118,7 @@ export async function sendUsageLimitEmail(email: string, name?: string) {
 
   return sendEmail({
     to: email,
-    subject: `You've reached your daily limit on ${APP_NAME}`,
+    subject: `You've used your free premium tool uses on ${APP_NAME}`,
     html: `
 <!DOCTYPE html>
 <html>
@@ -129,14 +133,13 @@ export async function sendUsageLimitEmail(email: string, name?: string) {
 
   <h2 style="color: #333;">Hey ${firstName},</h2>
 
-  <p>You've used all <strong>2 free file conversions</strong> for today.</p>
+  <p>You've used all <strong>4 free uses</strong> of our premium tools. Our 30 free tools are still yours to use as much as you like.</p>
 
-  <p>Your limit will reset at midnight, or you can upgrade to Pro for:</p>
+  <p>Upgrade to Pro ($4.99/month or $39.99/year) for:</p>
   <ul style="color: #555;">
-    <li><strong>Unlimited</strong> file processing</li>
+    <li><strong>Unlimited</strong> use of all premium tools</li>
     <li>Files up to <strong>100MB</strong></li>
-    <li>Priority processing speed</li>
-    <li>Batch processing</li>
+    <li>Advanced compression levels</li>
   </ul>
 
   <div style="text-align: center; margin: 30px 0;">
@@ -180,12 +183,13 @@ export async function sendProWelcomeEmail(email: string, name?: string) {
   <p>Thank you for upgrading to PDFflow Pro! Your account has been upgraded and you now have access to:</p>
 
   <ul style="color: #555;">
-    <li>✅ <strong>Unlimited</strong> file processing</li>
+    <li>✅ <strong>Unlimited</strong> use of all 100 tools</li>
     <li>✅ Files up to <strong>100MB</strong></li>
-    <li>✅ Priority processing speed</li>
-    <li>✅ Batch processing</li>
-    <li>✅ Advanced tools (OCR, native exports)</li>
+    <li>✅ Advanced compression levels</li>
+    <li>✅ No "Processed with PDFflow" footer on outputs</li>
   </ul>
+
+  <p style="color: #555;">Your plan renews automatically until you cancel. You can cancel anytime from Settings &gt; Account &gt; Manage billing.</p>
 
   <div style="text-align: center; margin: 30px 0;">
     <a href="${APP_URL}/dashboard" style="background: linear-gradient(to right, #6366f1, #8b5cf6); color: white; padding: 12px 30px; border-radius: 25px; text-decoration: none; font-weight: 500; display: inline-block;">

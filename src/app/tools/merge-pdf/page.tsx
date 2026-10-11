@@ -31,7 +31,7 @@ const features = [
   },
   {
     icon: Shield,
-    title: "100% Secure",
+    title: "Private by Design",
     description: "Your files are processed locally in your browser. Nothing is uploaded to our servers.",
   },
   {
@@ -88,7 +88,7 @@ export default function MergePDFPage() {
 
           <p className="text-xl text-[var(--text-secondary)] max-w-2xl mx-auto mb-10">
             Combine multiple PDF documents into a single file in seconds.
-            No registration, no watermarks, completely free.
+            No registration needed, and free to use.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -219,7 +219,7 @@ export default function MergePDFPage() {
             Ready to Merge Your PDFs?
           </h2>
           <p className="text-[var(--text-secondary)] mb-8">
-            Join thousands of users who trust PDFflow for their PDF needs.
+            Merge PDFs in your browser — no upload required.
           </p>
           <Link
             href="/merge"

@@ -30,7 +30,7 @@ const features = [
   },
   {
     icon: Shield,
-    title: "100% Secure",
+    title: "Private by Design",
     description: "All conversion happens locally in your browser. Your images stay private.",
   },
   {

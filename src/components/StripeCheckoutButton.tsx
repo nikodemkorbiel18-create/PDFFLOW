@@ -6,10 +6,10 @@ import { useAuthModal } from "@/contexts/AuthModalContext";
 import { Loader2 } from "lucide-react";
 
 interface StripeCheckoutButtonProps {
-  isLifetime?: boolean;
+  plan: "monthly" | "annual";
 }
 
-export function StripeCheckoutButton({ isLifetime = true }: StripeCheckoutButtonProps) {
+export function StripeCheckoutButton({ plan }: StripeCheckoutButtonProps) {
   const [isLoading, setIsLoading] = useState(false);
   const { user } = useAuth();
   const { openAuthModal } = useAuthModal();
@@ -30,7 +30,7 @@ export function StripeCheckoutButton({ isLifetime = true }: StripeCheckoutButton
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          priceType: isLifetime ? "lifetime" : "monthly",
+          priceType: plan,
         }),
       });
 
@@ -63,8 +63,8 @@ export function StripeCheckoutButton({ isLifetime = true }: StripeCheckoutButton
           <Loader2 className="w-5 h-5 mr-2 animate-spin" />
           Loading...
         </>
-      ) : isLifetime ? (
-        "Get Lifetime Access"
+      ) : plan === "annual" ? (
+        "Subscribe Yearly"
       ) : (
         "Subscribe Monthly"
       )}
